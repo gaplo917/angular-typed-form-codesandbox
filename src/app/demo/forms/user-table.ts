@@ -5,29 +5,6 @@ import {
   TypedNumberFormControl,
 } from '@gaplo917/angular-typed-forms'
 
-interface AddressType {
-  address1: TypedFormControl<string | null>
-  address2: TypedFormControl<string | null>
-  address3: TypedFormControl<string | null>
-}
-
-/**
- * SimpleTable is equivalent to TypedFormArray<TypedFormGroup<AddressType>> but with more pre-defined API
- */
-export class AddressTable extends SimpleTable<AddressType> {
-  constructor(private fb: SimpleFormBuilder) {
-    super({
-      constructRow: () =>
-        fb.form({
-          address1: fb.control(null),
-          address2: fb.control(null),
-          address3: fb.control(null),
-        }),
-      size: 1,
-    })
-  }
-}
-
 interface UserTableType {
   id: TypedFormControl<string | null>
   username: TypedFormControl<string | null>
@@ -35,7 +12,11 @@ interface UserTableType {
   isStudent: TypedFormControl<boolean>
   age?: TypedNumberFormControl<number | null>
   // nested form
-  addresses: AddressTable
+  addresses: SimpleTable<{
+    address1: TypedFormControl<string | null>
+    address2: TypedFormControl<string | null>
+    address3: TypedFormControl<string | null>
+  }>
 }
 
 /**
@@ -50,7 +31,15 @@ export class UserTable extends SimpleTable<UserTableType> {
           username: fb.control(null),
           birth: fb.control(null),
           isStudent: fb.control<boolean>(false),
-          addresses: new AddressTable(fb),
+          addresses: fb.table({
+            constructRow: () =>
+              fb.form({
+                address1: fb.control(null),
+                address2: fb.control(null),
+                address3: fb.control(null),
+              }),
+            size: 1,
+          }),
         }),
       size: 2,
     })
