@@ -1,0 +1,23 @@
+mat-card {
+  padding: 32px;
+}
+.user-card {
+  margin: 16px 0;
+}
+mat-card-title {
+  margin-bottom: 16px;
+}
+
+.fn-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.fn-btn-container button {
+  margin: 16px;
+}
+
+mat-form-field {
+  margin-right: 8px;
+  max-width: 150px;
+}
